@@ -28,7 +28,6 @@
 .sidebar h2 {
   color: #2c3e50;
   font-size: 1.5rem;
-  margin-bottom: 10px;
 }
 
 .input-group {
@@ -72,17 +71,20 @@
   background-color: #ecf0f1;
   margin-bottom: 8px;
   border-radius: 5px;
-  font-size: 1rem;
   color: #333;
 }
 
 .delete-btn {
   background: none;
   border: none;
-  color: #e74c3c;
   cursor: pointer;
-  font-weight: bold;
   font-size: 1.2rem;
+}
+
+.empty-message {
+  color: #95a5a6;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .optimize-btn {
@@ -105,47 +107,13 @@
 .map-area {
   flex: 1;
   position: relative;
+}
+
+.map-error, .map-loading {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-}
-
-/* Background Image Styling */
-.bg-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
   height: 100%;
-
-  background-image: url('/travel-bg.png'); 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.8; 
-  z-index: 0;
-}
-
-/* Styling for Text */
-.map-placeholder {
-  position: relative;
-  z-index: 1; 
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.85); 
-  padding: 30px 50px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  backdrop-filter: blur(5px); 
-}
-
-.map-placeholder h3 {
-  font-size: 2rem;
-  color: #2c3e50;
-  margin-bottom: 10px;
-}
-
-.map-placeholder p {
+  font-size: 1.2rem;
   color: #7f8c8d;
-  font-size: 1.1rem;
 }

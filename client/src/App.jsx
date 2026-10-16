@@ -1,19 +1,34 @@
 import { useState } from 'react';
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import './App.css';
+
+// Default map center (India)
+const defaultCenter = {
+  lat: 20.5937,
+  lng: 78.9629
+};
+
+const mapContainerStyle = {
+  width: '100%',
+  height: '100%'
+};
 
 function App() {
   const [destination, setDestination] = useState('');
   const [destinations, setDestinations] = useState([]);
 
-  // Function to add a new destination
+  // Load Google Maps API
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+  });
+
   const handleAddDestination = () => {
     if (destination.trim() !== '') {
       setDestinations([...destinations, destination]);
-      setDestination(''); // Clear input box
+      setDestination('');
     }
   };
 
-  // Function to remove a destination
   const handleDeleteDestination = (indexToDelete) => {
     const updatedDestinations = destinations.filter((_, index) => index !== indexToDelete);
     setDestinations(updatedDestinations);
@@ -21,14 +36,13 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Left Sidebar */}
       <div className="sidebar">
         <h2>Travel Planner</h2>
         
         <div className="input-group">
           <input 
             type="text" 
-            placeholder="Enter destination (e.g., Goa)" 
+            placeholder="Enter destination" 
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleAddDestination()}
@@ -40,18 +54,13 @@ function App() {
           {destinations.map((dest, index) => (
             <li key={index}>
               {dest}
-              <button 
-                className="delete-btn" 
-                onClick={() => handleDeleteDestination(index)}
-              >
+              <button className="delete-btn" onClick={() => handleDeleteDestination(index)}>
                 ❌
               </button>
             </li>
           ))}
           {destinations.length === 0 && (
-            <p style={{ color: '#95a5a6', textAlign: 'center', marginTop: '20px' }}>
-              No destinations added yet.
-            </p>
+            <p className="empty-message">No destinations added yet.</p>
           )}
         </ul>
 
@@ -60,16 +69,20 @@ function App() {
         </button>
       </div>
 
-      {/* Right Map Area */}
       <div className="map-area">
-        {/* Background Image Layer */}
-        <div className="bg-image"></div>
+        {/* Google Map Integration */}
+        {loadError && <div className="map-error">Error loading maps</div>}
+        {!isLoaded && !loadError && <div className="map-loading">Loading Map...</div>}
         
-        {/* Content on top of image */}
-        <div className="map-placeholder">
-          <h3>Plan Your Next Adventure</h3>
-          <p>Google Maps API integration coming in Week 3</p>
-        </div>
+        {isLoaded && (
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            center={defaultCenter}
+            zoom={5}
+          >
+            {/* Markers can be added here in the next step */}
+          </GoogleMap>
+        )}
       </div>
     </div>
   );
